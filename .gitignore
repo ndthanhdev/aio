@@ -11,7 +11,6 @@ node_modules/
 
 ## Yarn
 .yarn/*
-!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
