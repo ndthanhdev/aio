@@ -1,6 +1,6 @@
-[![Release Dev](https://github.com/ndthanhdev/ndthanhdev.github.io/actions/workflows/release-dev.yml/badge.svg)](https://github.com/ndthanhdev/ndthanhdev.github.io/actions/workflows/release-dev.yml)
-[![Release Stg](https://github.com/ndthanhdev/ndthanhdev.github.io/actions/workflows/release-stg.yml/badge.svg)](https://github.com/ndthanhdev/ndthanhdev.github.io/actions/workflows/release-stg.yml)
-[![Release Prod](https://github.com/ndthanhdev/ndthanhdev.github.io/actions/workflows/release-prod.yml/badge.svg)](https://github.com/ndthanhdev/ndthanhdev.github.io/actions/workflows/release-prod.yml)
+[![Release Dev](https://github.com/ndthanhdev/aio/actions/workflows/release-dev.yml/badge.svg)](https://github.com/ndthanhdev/aio/actions/workflows/release-dev.yml)
+[![Release Stg](https://github.com/ndthanhdev/aio/actions/workflows/release-stg.yml/badge.svg)](https://github.com/ndthanhdev/aio/actions/workflows/release-stg.yml)
+[![Release Prod](https://github.com/ndthanhdev/aio/actions/workflows/release-prod.yml/badge.svg)](https://github.com/ndthanhdev/aio/actions/workflows/release-prod.yml)
 
 Welcome to my personal website repository! This repository contains the source code and content for my personal website, where I share posts on tech and life and experiment with various technologies.
 
