@@ -3,16 +3,88 @@ import type { GatsbyNode } from "gatsby";
 
 import path from "node:path";
 
+import { isHandbookFile, toHandbookPath } from "./src/utils/handbook";
 import { isValidNanoId } from "./src/utils/is-valid-nano-id";
-import { cvPage, postPages } from "./src/utils/queries";
+import { cvPage, handbookPages, postPages } from "./src/utils/queries";
 
 const cvFile = path.resolve(`./content/cv/cv.mdx`),
+	handbookTemplate = path.resolve(`./src/layouts/handbook/index.tsx`),
 	myCVTemplate = path.resolve(`./src/layouts/cv/index.tsx`),
 	postTemplate = path.resolve(`./src/layouts/post/index.tsx`);
+
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
+	({ actions }) => {
+		actions.createTypes(`
+			type Mdx implements Node {
+				fields: MdxFields
+				frontmatter: MdxFrontmatter
+			}
+
+			type MdxFields {
+				handbookPath: String
+			}
+
+			type MdxFrontmatter {
+				order: Int
+				title: String
+			}
+		`);
+	};
+
+export const onCreateNode: GatsbyNode["onCreateNode"] = ({ actions, node }) => {
+	if (node.internal.type !== "Mdx") {
+		return;
+	}
+
+	const contentFilePath = node.internal.contentFilePath;
+
+	if (!contentFilePath || !isHandbookFile(contentFilePath)) {
+		return;
+	}
+
+	actions.createNodeField({
+		name: "handbookPath",
+		node,
+		value: toHandbookPath(contentFilePath),
+	});
+};
 
 export const createPages: GatsbyNode["createPages"] = async (arguments_) => {
 	await createPosts();
 	await createCV();
+	await createHandbook();
+
+	async function createHandbook() {
+		const { actions, graphql, reporter } = arguments_,
+			{ createPage } = actions,
+			result = await graphql<Queries.Query>(handbookPages);
+
+		if (result.errors) {
+			reporter.panicOnBuild("Error loading handbook MDX", result.errors);
+		}
+
+		if (!result.data) {
+			throw new Error(`No handbook MDX data found`, {
+				cause: result,
+			});
+		}
+
+		for (const node of result.data.allMdx.nodes) {
+			const handbookPath = node.fields?.handbookPath;
+
+			if (!handbookPath) {
+				throw new Error(`No handbookPath found`, {
+					cause: node,
+				});
+			}
+
+			createPage({
+				component: `${handbookTemplate}?__contentFilePath=${String(node.internal.contentFilePath)}`,
+				context: { id: node.id },
+				path: handbookPath,
+			});
+		}
+	}
 
 	async function createCV() {
 		const { actions, graphql, reporter } = arguments_,

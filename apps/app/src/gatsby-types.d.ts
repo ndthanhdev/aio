@@ -1251,6 +1251,7 @@ type Mdx = Node & {
   readonly body: Maybe<Scalars['String']>;
   readonly children: ReadonlyArray<Node>;
   readonly excerpt: Maybe<Scalars['String']>;
+  readonly fields: Maybe<MdxFields>;
   readonly frontmatter: Maybe<MdxFrontmatter>;
   readonly id: Scalars['ID'];
   readonly internal: Internal;
@@ -1317,6 +1318,7 @@ type MdxFieldSelector = {
   readonly body: InputMaybe<FieldSelectorEnum>;
   readonly children: InputMaybe<NodeFieldSelector>;
   readonly excerpt: InputMaybe<FieldSelectorEnum>;
+  readonly fields: InputMaybe<MdxFieldsFieldSelector>;
   readonly frontmatter: InputMaybe<MdxFrontmatterFieldSelector>;
   readonly id: InputMaybe<FieldSelectorEnum>;
   readonly internal: InputMaybe<InternalFieldSelector>;
@@ -1324,10 +1326,27 @@ type MdxFieldSelector = {
   readonly tableOfContents: InputMaybe<FieldSelectorEnum>;
 };
 
+type MdxFields = {
+  readonly handbookPath: Maybe<Scalars['String']>;
+};
+
+type MdxFieldsFieldSelector = {
+  readonly handbookPath: InputMaybe<FieldSelectorEnum>;
+};
+
+type MdxFieldsFilterInput = {
+  readonly handbookPath: InputMaybe<StringQueryOperatorInput>;
+};
+
+type MdxFieldsSortInput = {
+  readonly handbookPath: InputMaybe<SortOrderEnum>;
+};
+
 type MdxFilterInput = {
   readonly body: InputMaybe<StringQueryOperatorInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
   readonly excerpt: InputMaybe<StringQueryOperatorInput>;
+  readonly fields: InputMaybe<MdxFieldsFilterInput>;
   readonly frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
   readonly id: InputMaybe<StringQueryOperatorInput>;
   readonly internal: InputMaybe<InternalFilterInput>;
@@ -1342,6 +1361,7 @@ type MdxFilterListInput = {
 type MdxFrontmatter = {
   readonly date: Maybe<Scalars['Date']>;
   readonly nanoId: Maybe<Scalars['String']>;
+  readonly order: Maybe<Scalars['Int']>;
   readonly thumb: Maybe<File>;
   readonly title: Maybe<Scalars['String']>;
   readonly wip: Maybe<Scalars['Boolean']>;
@@ -1358,6 +1378,7 @@ type MdxFrontmatter_dateArgs = {
 type MdxFrontmatterFieldSelector = {
   readonly date: InputMaybe<FieldSelectorEnum>;
   readonly nanoId: InputMaybe<FieldSelectorEnum>;
+  readonly order: InputMaybe<FieldSelectorEnum>;
   readonly thumb: InputMaybe<FileFieldSelector>;
   readonly title: InputMaybe<FieldSelectorEnum>;
   readonly wip: InputMaybe<FieldSelectorEnum>;
@@ -1366,6 +1387,7 @@ type MdxFrontmatterFieldSelector = {
 type MdxFrontmatterFilterInput = {
   readonly date: InputMaybe<DateQueryOperatorInput>;
   readonly nanoId: InputMaybe<StringQueryOperatorInput>;
+  readonly order: InputMaybe<IntQueryOperatorInput>;
   readonly thumb: InputMaybe<FileFilterInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
   readonly wip: InputMaybe<BooleanQueryOperatorInput>;
@@ -1374,6 +1396,7 @@ type MdxFrontmatterFilterInput = {
 type MdxFrontmatterSortInput = {
   readonly date: InputMaybe<SortOrderEnum>;
   readonly nanoId: InputMaybe<SortOrderEnum>;
+  readonly order: InputMaybe<SortOrderEnum>;
   readonly thumb: InputMaybe<FileSortInput>;
   readonly title: InputMaybe<SortOrderEnum>;
   readonly wip: InputMaybe<SortOrderEnum>;
@@ -1424,6 +1447,7 @@ type MdxSortInput = {
   readonly body: InputMaybe<SortOrderEnum>;
   readonly children: InputMaybe<NodeSortInput>;
   readonly excerpt: InputMaybe<SortOrderEnum>;
+  readonly fields: InputMaybe<MdxFieldsSortInput>;
   readonly frontmatter: InputMaybe<MdxFrontmatterSortInput>;
   readonly id: InputMaybe<SortOrderEnum>;
   readonly internal: InputMaybe<InternalSortInput>;
@@ -1695,6 +1719,7 @@ type Query_mdxArgs = {
   body: InputMaybe<StringQueryOperatorInput>;
   children: InputMaybe<NodeFilterListInput>;
   excerpt: InputMaybe<StringQueryOperatorInput>;
+  fields: InputMaybe<MdxFieldsFilterInput>;
   frontmatter: InputMaybe<MdxFrontmatterFilterInput>;
   id: InputMaybe<StringQueryOperatorInput>;
   internal: InputMaybe<InternalFilterInput>;
@@ -2592,6 +2617,18 @@ type GatsbyImageSharpFluid_withWebp_noBase64Fragment = { readonly aspectRatio: n
 type GatsbyImageSharpFluid_withWebp_tracedSVGFragment = { readonly tracedSVG: string | null, readonly aspectRatio: number, readonly src: string, readonly srcSet: string, readonly srcWebp: string | null, readonly srcSetWebp: string | null, readonly sizes: string };
 
 type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: number, readonly maxWidth: number };
+
+type HandbookTemplateQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+type HandbookTemplateQuery = { readonly mdx: { readonly tableOfContents: Record<string, unknown> | null, readonly h1TableOfContents: Record<string, unknown> | null, readonly frontmatter: { readonly title: string | null } | null } | null };
+
+type HandbookTreeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type HandbookTreeQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<{ readonly fields: { readonly handbookPath: string | null } | null, readonly frontmatter: { readonly order: number | null, readonly title: string | null } | null }> } };
 
 type HomeQueryVariables = Exact<{ [key: string]: never; }>;
 

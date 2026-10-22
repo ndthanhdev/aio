@@ -18,6 +18,12 @@ export const useProjects = () =>
 					title: "MCP Browser Kit",
 					url: "https://github.com/ndthanhdev/mcp-browser-kit",
 				},
+				{
+					description:
+						"How this website works: concepts, how-tos and what happens under the hood.",
+					title: "Handbook",
+					url: "/handbook",
+				},
 			] satisfies Project[],
 		[],
 	);
