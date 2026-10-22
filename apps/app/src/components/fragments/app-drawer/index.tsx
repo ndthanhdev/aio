@@ -5,10 +5,14 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Typography from "@mui/material/Typography";
 import { ThemeMode } from "@n8v/app/theme";
+import { siteTabs } from "@n8v/app/utils/site-tabs";
+import { Link as GatsbyLink } from "gatsby";
 import * as React from "react";
 
 import { styles } from "./styles";
@@ -37,6 +41,23 @@ export const AppDrawer = ({
 			</IconButton>
 		</Box>
 		<Divider />
+		<Box component="nav" css={styles.pages.root}>
+			<Typography css={styles.section.heading}>Pages</Typography>
+			<List disablePadding>
+				{siteTabs.map((tab) => (
+					<ListItemButton
+						component={GatsbyLink}
+						css={styles.pages.item}
+						key={tab.to}
+						onClick={onClose}
+						to={tab.to}
+					>
+						{tab.label}
+					</ListItemButton>
+				))}
+			</List>
+			<Divider css={styles.pages.divider} />
+		</Box>
 		<Box css={styles.section.root}>
 			<Typography css={styles.section.heading}>Theme Mode</Typography>
 			<ToggleButtonGroup

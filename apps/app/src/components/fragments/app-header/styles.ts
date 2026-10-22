@@ -28,6 +28,13 @@ export const styles = {
 		root: () => css({ gridArea: "right" }),
 	},
 
+	tab: (theme: AppTheme) =>
+		css({
+			[theme.breakpoints.down("sm")]: {
+				display: "none",
+			},
+		}),
+
 	toolbar: (theme: AppTheme) =>
 		css({
 			alignItems: "center",

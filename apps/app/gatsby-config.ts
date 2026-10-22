@@ -27,6 +27,12 @@ const config: GatsbyConfig = {
 				gatsbyRemarkPlugins: [
 					{
 						options: {
+							icon: false,
+						},
+						resolve: `gatsby-remark-autolink-headers`,
+					},
+					{
+						options: {
 							aliases: {},
 							classPrefix: "language-",
 							noInlineHighlight: false,

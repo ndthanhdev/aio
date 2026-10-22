@@ -6,6 +6,24 @@ query cvPage($cvFile: String!) {
 }
 `;
 
+export const handbookPages = `
+query handbookPages {
+  allMdx(
+    filter: { internal: { contentFilePath: { glob: "**/content/handbook/**" } } }
+  ) {
+    nodes {
+      id
+      fields {
+        handbookPath
+      }
+      internal {
+        contentFilePath
+      }
+    }
+  }
+}
+`;
+
 export const postPages = `
 query postPages {
   allMdx(

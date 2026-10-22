@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import { ThemeMode } from "@n8v/app/theme";
+import { siteTabs } from "@n8v/app/utils/site-tabs";
 import { Link as GatsbyLink } from "gatsby";
 import * as React from "react";
 
@@ -44,24 +45,18 @@ export const AppHeader = ({
 						>
 							ndthanhdev
 						</Link>
-						<Button
-							aria-label="About"
-							component={GatsbyLink}
-							size="large"
-							to="/about"
-							variant="text"
-						>
-							about
-						</Button>
-						<Button
-							aria-label="Apps"
-							component={GatsbyLink}
-							size="large"
-							to="/projects"
-							variant="text"
-						>
-							projects
-						</Button>
+						{siteTabs.map((tab) => (
+							<Button
+								component={GatsbyLink}
+								css={styles.tab}
+								key={tab.to}
+								size="large"
+								to={tab.to}
+								variant="text"
+							>
+								{tab.label}
+							</Button>
+						))}
 					</Stack>
 					<Stack alignItems="center" css={styles.right.root} direction="row">
 						<IconButton

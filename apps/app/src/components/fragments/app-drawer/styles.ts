@@ -12,6 +12,30 @@ export const styles = {
 			padding: theme.spacing(2),
 		}),
 
+	pages: {
+		divider: (theme: AppTheme) =>
+			css({
+				marginBlockStart: theme.spacing(2),
+				marginInline: theme.spacing(-2),
+			}),
+		item: (theme: AppTheme) =>
+			css({
+				borderRadius: theme.shape.borderRadius,
+				color: theme.palette.primary.main,
+				fontWeight: theme.typography.fontWeightMedium,
+				textTransform: "uppercase",
+			}),
+		root: (theme: AppTheme) =>
+			css({
+				paddingBlockEnd: 0,
+				paddingBlockStart: theme.spacing(2),
+				paddingInline: theme.spacing(2),
+				[theme.breakpoints.up("sm")]: {
+					display: "none",
+				},
+			}),
+	},
+
 	root: (theme: AppTheme) =>
 		css({
 			[`& .${drawerClasses.paper}`]: {
