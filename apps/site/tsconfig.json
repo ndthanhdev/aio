@@ -1,0 +1,20 @@
+{
+	"extends": "../../tsconfig.options.json",
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "@emotion/react",
+		"baseUrl": ".",
+		"paths": {
+			"@n8v/site/*": [
+				"src/*"
+			]
+		},
+		"outDir": "../../.moon/cache/types/apps/site"
+	},
+	"include": [
+		"./src/**/*",
+		"./content/**/*",
+		"gatsby-node.ts",
+		"gatsby-config.ts"
+	]
+}

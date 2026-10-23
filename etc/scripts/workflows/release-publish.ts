@@ -6,7 +6,7 @@ import { workDirs } from "../utils/work-dirs";
 
 $.verbose = true;
 
-await fse.emptyDir(workDirs.apps.app.public.path);
+await fse.emptyDir(workDirs.apps.site.public.path);
 
 cd(workDirs.etc.workflowRuntime.path);
 
@@ -36,7 +36,7 @@ await $`${[
 	"scripts:publish",
 	"container",
 	"directory",
-	"--path=/workspace/apps/app/public",
+	"--path=/workspace/apps/site/public",
 	"export",
-	`--path=${workDirs.apps.app.public.path}`,
+	`--path=${workDirs.apps.site.public.path}`,
 ]}`;

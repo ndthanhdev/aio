@@ -1,0 +1,298 @@
+---
+title: ndthanhdev's cv
+date: 2023-09-15
+---
+
+{/* * @jsx jsx */}
+import { jsx } from "theme-ui";
+import Box from "@mui/material/Box";
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import Chip from '@mui/material/Chip';
+import Typography from '@mui/material/Typography';
+import { SkillBadge } from "@n8v/site/components/elements/shields-io/variants/skill-badge";
+import { Connect } from "@n8v/site/components/elements/shields-io/variants/connect";
+import { CvSectionDivider } from "@n8v/site/components/fragments/cv-section-divider";
+import Grid from '@mui/material/Unstable_Grid2';
+import Link from '@mui/material/Link';
+import { envs } from "@n8v/site/utils/envs";
+
+import Avatar from "./images/avatar.png";
+import Cover from "./images/cover.png";
+import PermIdentity from "./images/perm_identity.svg";
+import Gender from "./images/gender.svg";
+import Github from "./images/github.svg";
+import LinkedIn from "./images/linkedin.svg";
+import LocationOn from "./images/location_on.svg";
+import Mail from "./images/mail.svg";
+import Markdown from "./images/markdown.svg";
+import Phone from "./images/phone.svg";
+
+export const Constants = {
+	logoLinkedIn:
+		"data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iIzBBNjZDMiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KPHBhdGggZD0iTTAgMS4xNDZDMCAuNTEzLjUyNiAwIDEuMTc1IDBoMTMuNjVDMTUuNDc0IDAgMTYgLjUxMyAxNiAxLjE0NnYxMy43MDhjMCAuNjMzLS41MjYgMS4xNDYtMS4xNzUgMS4xNDZIMS4xNzVDLjUyNiAxNiAwIDE1LjQ4NyAwIDE0Ljg1NHptNC45NDMgMTIuMjQ4VjYuMTY5SDIuNTQydjcuMjI1em0tMS4yLTguMjEyYy44MzcgMCAxLjM1OC0uNTU0IDEuMzU4LTEuMjQ4LS4wMTUtLjcwOS0uNTItMS4yNDgtMS4zNDItMS4yNDhTMi40IDMuMjI2IDIuNCAzLjkzNGMwIC42OTQuNTIxIDEuMjQ4IDEuMzI3IDEuMjQ4em00LjkwOCA4LjIxMlY5LjM1OWMwLS4yMTYuMDE2LS40MzIuMDgtLjU4Ni4xNzMtLjQzMS41NjgtLjg3OCAxLjIzMi0uODc4Ljg2OSAwIDEuMjE2LjY2MiAxLjIxNiAxLjYzNHYzLjg2NWgyLjQwMVY5LjI1YzAtMi4yMi0xLjE4NC0zLjI1Mi0yLjc2NC0zLjI1Mi0xLjI3NCAwLTEuODQ1LjctMi4xNjUgMS4xOTN2LjAyNWgtLjAxNmwuMDE2LS4wMjVWNi4xNjloLTIuNGMuMDMuNjc4IDAgNy4yMjUgMCA3LjIyNXoiLz4KPC9zdmc+Cg==",
+	yearsOfExperience: new Date().getFullYear() - 2018,
+};
+
+<Box
+	sx={{
+		zIndex: -1,
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		height: "200px",
+	}}
+>
+	<img
+		src={Cover}
+		css={{
+			objectFit: "cover",
+			width: "100%",
+			height: "100%",
+		}}
+	/>
+</Box>
+
+<Stack alignItems="center" spacing={2} mt={8}
+	sx={{
+		width: "100%",
+	}}
+>
+	<img
+		src={Avatar}
+		css={{
+			flexShrink: 1,
+			width: "200px",
+		}}
+	/>
+
+<Divider
+	mt={8}
+	sx={{
+		width: "66%",
+	}}
+>
+	#### Thanh, Nguyen
+</Divider>
+
+</Stack>
+<Typography pt={1} variant="body1"  gutterBottom textAlign="center">
+	{`Open minded Full-stack developer with ${Constants.yearsOfExperience}+ years of
+	comprehensive expertise in Web App Development with willingness to learn and
+	master Gen AI development. I take great care in the code quality, readability,
+	automator, architecture of the things I build. I'm also an open-source
+	enthusiast and love to collaborate with open-source community.`}
+</Typography>
+
+<Typography mt={1} variant="body1" textAlign="center" gutterBottom>
+	{"Experienced with"}
+</Typography>
+
+<Stack
+	direction="row"
+	justifyContent="center"
+	spacing={1}
+	useFlexGap
+	flexWrap="wrap"
+	mb={2}
+>
+	<SkillBadge skill="typescript" />
+	<SkillBadge skill="javascript" />
+
+    <SkillBadge skill="react" />
+    <SkillBadge skill="next.js" skillLogo="nextdotjs" logoColor="#000000" />
+    <SkillBadge skill="redux" logoColor="#764ABC" />
+
+    <SkillBadge skill="sass" />
+    <SkillBadge skill="css" skillLogo="css" logoColor="#663399" />
+
+    <SkillBadge skill="node.js" skillLogo="nodedotjs" />
+    <SkillBadge skill="go" />
+    <SkillBadge skill="elixir" logoColor="#4B275F" />
+
+    <SkillBadge skill="graphql" logoColor="#E10098" />
+
+    <SkillBadge skill="mongodb" />
+    <SkillBadge skill="postgres" skillLogo="postgresql" />
+
+    <SkillBadge skill="docker" />
+    <SkillBadge skill="kubernetes" />
+
+    <SkillBadge skill="electron" />
+    <SkillBadge skill="langgraph" logoColor="#1C3C3C" />
+
+</Stack>
+
+<Typography mt={1} variant="body1" textAlign="center" gutterBottom>
+	{"Connect with me (@ndthanhdev) on"}
+</Typography>
+
+<Stack
+	direction="row"
+	justifyContent="center"
+	spacing={1}
+	useFlexGap
+	flexWrap="wrap"
+>
+	<Connect
+		connect="github"
+		connectColor="#000000"
+		url="https://github.com/ndthanhdev"
+	/>
+	<Connect
+		connect="linkedin"
+		connectLogo={Constants.logoLinkedIn}
+		url="https://www.linkedin.com/in/ndthanhdev/"
+	/>
+</Stack>
+
+<CvSectionDivider>Work experience</CvSectionDivider>
+
+**McKinsey & Company**
+
+- **Software Engineer II**
+  _2025 Apr - Present_
+- **Software Engineer I**
+  _2023 Nov - 2025 Apr_
+- **Junior Software Engineer**
+  _2022 Dec - 2023 Nov_
+
+**Zalo**
+
+- **Senior Software Engineer**
+  _2021 Sep - 2022 Nov_
+- **Software Engineer**
+  _2020 Apr - 2021 Sep_
+- **Accociate Software Engineer**
+  _2019 Jun - 2020 Apr_
+
+**SAP**
+
+- **Accociate Software Engineer**
+  _2019 Jun - 2018 Sep_
+- **Intern**
+  _2018 Jan - 2019 Jun_
+
+<CvSectionDivider>Projects</CvSectionDivider>
+
+**MCP Browser Kit**
+_A pair of MCP server and browser extension that enables AI assistants to interact with your local browsers_
+
+- Building an open-source Model Context Protocol (MCP) server and browser extension system with TypeScript to bridge AI assistants and web browsers
+- Developing cross-browser extensions supporting Chrome, Firefox, Safari, Brave, and Edge with different extension manifest versions (M2/M3)
+- Creating seamless browser automation capabilities that allow AI assistants to interact with web pages and perform browser actions
+
+**MLR Acceleration App**
+_A smart app that leverages AI to speed up Medical, Legal, and Regulatory (MLR) document reviews_
+
+- Building a modern web app with Next.js to create an easy-to-use interface for MLR processes
+- Creating interactive PDF viewing and annotation features for better document review
+
+**Housing Super Apps - Web & Mobile**
+_A housing super app that allows users to acquire and maintain their properties_
+
+- Designing and developing cross-platform mobile applications using React Native to deliver seamless user experiences
+- Implementing comprehensive authentication flows and user management systems integrated with IAM infrastructure
+
+**Zalo - Web & PC**
+_Zalo is a popular cross-platform messaging, video call app and more_
+
+- Designing and building rich new features for the web and desktop version of Zalo
+- Building reusable ui components, which have been used in multiple modules
+- Continuosly improving the app performance as well as refactoring the codebase
+
+**SAP Analytics Cloud - KPI Plugin**
+_Analytics Cloud is a pluggable SaaS BI platform and KPI plugin is builder of KPIs_
+
+- Designing and configuring bundler to publishing the project as a Plugin for SAP Analytics Cloud
+- Developing and writing test for new features as a part of the plugin
+
+**SAP HANA Cockpit - Analytics Builder**
+_Analytics Builder is a graphical SQL design studio to enable flexible queries on top of tables_
+
+- Implementing Grunt task to transpile & minify that helps speed up project development and improve the load time of the web app
+- Developing new and customizing existing features using UI5
+
+**Open Bucket**
+_Open Bucket is an incognito P2P storage system, users are paid Ethereum if they share their disk space with others_
+
+- Developing Desktop app with React, Redux, Electron
+- Developing Daemon, a service on the user's machine that interacts with Tracker and smart contracts, built with NodeJs, web3.js
+- Developing Tracker that mainly connects users together
+
+**SStore**
+_A combination of e-commerce website and vending machines, these components communicate via MQTT protocol_
+
+- Developing admin service with PostgreSQL, ASP.NET
+- Developing a single page web app for admin and customer with Angular 2
+- Developing and build a simple vending machine with Arduino and other hardwares
+
+<CvSectionDivider>Achievements</CvSectionDivider>
+
+**Certificate Of Agile Software Development With Scrum**
+_Axon Active Vietnam - 2016_
+
+**Microsoft Imagine Cup Innovation Competition Certificate**
+_Microsoft Vietnam - 2015_
+
+**2ND Prize App Studio**
+_Ton Duc Thang University & Microsoft Vietnam - 2014_
+
+<CvSectionDivider>Education</CvSectionDivider>
+
+**BSc in Computer Science**
+_Ton Duc Thang University, Ho Chi Minh - 2018_
+
+<CvSectionDivider>Contact info</CvSectionDivider>
+
+<Box
+	sx={{
+		display: "grid",
+		gridTemplateColumns: "20px 1fr 20px 1fr",
+		gridAutoRows: "auto",
+		gridGap: "8px",
+		alignItems: "center",
+		justifyItems: "start",
+	}}
+>
+	<img src={PermIdentity} />
+	<Typography>
+		{"Nguyễn Duy Thanh"}
+	</Typography>
+			<img src={Mail} />
+			<Typography>
+				{"ndthanhdev@outlook.com"}
+			</Typography>
+
+    		<img src={Gender} />
+    		<Typography>
+    			{"Male"}
+    		</Typography>
+
+    		<img src={LocationOn} width="16px" />
+    		<Typography>
+    			{"Ho Chi Minh, Vietnam"}
+    		</Typography>
+    	</Box>
+
+<CvSectionDivider />
+
+<Stack
+	direction="row"
+	mt={0}
+	mb={2}
+	justifyContent="center"
+	css={{
+		width: "100%",
+	}}
+>
+	<Typography variant="caption" color="text.secondary">
+		<>
+			{`Build ${envs.buildNumber}, latest version at `}
+			<Link href="https://ndthanhdev.github.io/cv" color="primary">
+				{"ndthanhdev.github.io/cv"}
+			</Link>
+		</>
+	</Typography>
+</Stack>
