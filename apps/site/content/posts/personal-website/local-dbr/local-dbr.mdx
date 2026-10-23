@@ -1,0 +1,202 @@
+---
+nanoId: np3i3m4dpqzxwi37u2lyo
+title: Databricks local development environment with VSCode and Mini Conda
+date: 2024-06-01
+wip: false
+thumb: ./assets/logo.svg
+---
+
+import { PostImage as Image } from "@n8v/site/components/fragments/post-image";
+
+import ImgLandscape from "./assets/landscape.svg";
+import ImgNewCluster from "./assets/new-cluster.png";
+import ImgSelectProfile from "./assets/select-profile.png";
+import ImgSelectEnv from "./assets/select-env.png";
+import ImgConfigureCluster from "./assets/configure-cluster.png";
+import ImageOutput from "./assets/output.png";
+
+<Image src={ImgLandscape} />
+
+I recently started working with Databricks and wanted to set up a local development environment to make it easier to work with notebooks and version control. In this post, I'll take you through the steps to set up a local Databricks environment using VSCode and Mini Conda.
+
+## Prerequisites
+
+Before we get started, you'll need to have the following tools:
+
+- **Databricks workspace:** you can follow [this guide](https://docs.databricks.com/en/getting-started/index.html) to create get a trial workspace or use an existing one.
+- [**Visual Studio Code**](https://code.visualstudio.com/) installed on your machine.
+
+## Step 1: Create Cluster
+
+The first step is to create a cluster in your Databricks workspace. That will be used to run your notebooks both in the workspace and locally.
+
+1. Open your Databricks Portal and navigate to the `Compute` tab.
+2. Click on `Create Compute` to create a new cluster.
+3. Select runtime version >= 15 and configuration for your cluster. You can use the default settings for now.
+4. Click on `Create Compute` and wait for the cluster to be up.
+
+After this step, you should have a new cluster running in your workspace.
+
+<Image src={ImgNewCluster} />
+
+## Step 2: Create Databricks Local Profile
+
+In this step, we'll connect your Databricks workspace to your local machine and storing the connection details in a local profile. This will allow Databricks Extension for VSCode to connect to your workspace.
+
+1. Install Databricks CLi by running one of the following commands:
+
+   ```bash
+   # For Linux/macOS
+   brew tap databricks/tap
+   brew install databricks
+
+   # For Windows
+   winget search databricks
+   winget install Databricks.DatabricksCLI
+   # Or
+   choco install databricks-cli
+   ```
+
+   Find more options to install the Databricks CLI [here](https://docs.databricks.com/en/dev-tools/databricks-connect/python/index.html#step-1-configure-databricks-authentication).
+
+   After this step, you should be able to run `databricks -v` command in your terminal.
+
+   ```bash
+   > databricks -v
+   Databricks CLI v0.223.1
+   ```
+
+2. Login to your Databricks workspace using the following command:
+
+   ```bash
+   databricks auth login --configure-cluster --host <workspace-url>
+   ```
+
+   Follows the prompts to log in and configure the cluster. After this step, you should be able to see the a profile in `~/.databrickscfg` file.
+
+## Step 3: Create Python Environment with Mini Conda
+
+If you already have a python environment set up, you can jump to step 2.4.
+
+Mini Conda is a lightweight version of Anaconda that allows you to create and manage python environments. It means you can have multiple python environments on your machine and switch between them easily.
+
+1. Install Mini Conda: Anaconda offers graphical installers for Windows, macOS, and Linux but I would recommend using installation scripts.
+
+   [You can find the OS specific installation scripts here](https://docs.anaconda.com/free/miniconda/#quick-command-line-install). At the time of writing, the installation script for **Linux** is as follows:
+
+   ```bash
+   mkdir -p ~/miniconda3
+   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+   bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+   rm -rf ~/miniconda3/miniconda.sh
+   ```
+
+   And don't forget to initialize mini conda for your shell, for example, for zsh or bash:
+
+   ```bash
+   ~/miniconda3/bin/conda init zsh
+   # or
+   ~/miniconda3/bin/conda init bash
+   ```
+
+   Now restart your shell and you should be able to use `conda` command. For example, I'm using zsh so I would run:
+
+   ```bash
+   > zsh
+   # Or
+   > bash
+
+   # Check conda version
+   > conda --version
+   conda 24.4.0
+   ```
+
+2. Next we'll create a new conda environment named `dbr` for our Databricks project. Run the following command to create a new environment:
+
+   ```bash
+   > conda create -n dbr
+   ...
+   > conda activate dbr
+   ```
+
+3. And install python in the new environment:
+
+   ```bash
+   > conda install python=3
+   ...
+   ```
+
+   After this step, you should have a new python environment named `dbr` with python 3 installed.
+
+   ```bash
+   > python --version
+   Python 3.12.4
+   ```
+
+4. Install `databricks-connect` to work with Databricks from your local machine:
+
+   ```bash
+   pip install databricks-connect
+   ```
+
+After this step, you should have a new python environment with `databricks-connect` installed.
+
+## Step 4: Run notebooks locally
+
+Now that we have our Databricks profile set up and a python environment ready, we can start working on our notebooks locally.
+
+1. Create a folder or a git repository for your Databricks project.
+
+   ```bash
+   # Create a new directory
+   > mkdir dbr-project
+   # Or clone an existing repository
+   > git clone <repo-url> dbr-project
+
+   > cd dbr-project
+   ```
+
+2. Install the Databricks extension for VSCode from the marketplace. Visit [this link](https://marketplace.visualstudio.com/items?itemName=databricks.databricks) and click on `Install`.
+
+   You should now see extension page in your VSCode, click on `Install` to install the extension.
+
+   Now you should be able to see the Databricks icon in the sidebar of your VSCode.
+
+3. Click on the Databricks icon in the sidebar and select `Configure Databricks`, then select the profile we created in step 1.
+
+   <Image src={ImgSelectProfile} />
+
+   You can also enable sync, Databricks extension will push all the files in the local folder to the Databricks workspace.
+
+   **PLEASE NOTE THAT THIS IS ONE-WAY SYNC, ANY CHANGES MADE IN THE DATABRICKS WORKSPACE WILL NOT BE REFLECTED IN THE LOCAL FOLDER**.
+
+4. Also on the Databricks extension, click on `Configure cluster` and select the cluster we created in step 1. Don't forget to make sure the cluster is running.
+
+   <Image src={ImgConfigureCluster} />
+
+5. Install Jupyter extension for VSCode to run the notebook. Visit [this link](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) and click on `Install`.
+
+6. Now you can create a new notebook for testing connection. Let's create a new notebook named `test.py` and add the following code:
+
+   ```python
+   # COMMAND ----------
+   from databricks.sdk.runtime import *
+
+   print(f"Hello Databricks, Spark version: {spark.version}")
+   ```
+
+   Don't forget include the `# COMMAND ----------` at the beginning of the cell and `from databricks.sdk.runtime import *` to import the necessary libraries.
+
+7. Open the command palette in VSCode by pressing `Ctrl + Shift + P` or `Cmd + Shift + P` and search for `Python: Select Interpreter`. Select the `dbr` environment we created in step 3.
+
+   <Image src={ImgSelectEnv} />
+
+8. Run the notebook by pressing `Shift + Enter` or clicking on the `Run Cell` button and you should see the output in the output panel.
+
+<Image src={ImageOutput} />
+
+## Conclusion
+
+Running Databricks notebooks locally can help you work more efficiently by allowing you to use lots of tools likes cli, extensions, github copilot, etc. that are not available in the Databricks workspace.
+
+I hope this guide helps you set up your local Databricks environment.

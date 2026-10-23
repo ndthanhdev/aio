@@ -12,24 +12,24 @@ $.verbose = true;
 
 await cleanBuild();
 
-cd(workDirs.apps.app.path);
+cd(workDirs.apps.site.path);
 
 $.env.GATSBY_BUILD_NUMBER = getBuildNumber();
 $.env.GATSBY_REV = await getRev();
 $.env.GATSBY_MODE = $.env.MODE;
 
-await $`moon run app:build counter:build recorder:build`;
+await $`moon run site:build counter:build recorder:build`;
 
 // Merge the rust/trunk bundles into the gatsby site so that
 // URLs like /apps/counter/ and /apps/recorder/ resolve correctly.
 await fse.copy(
 	workDirs.apps.counter.target.trunk.dist.path,
-	path.join(workDirs.apps.app.public.path, "apps/counter"),
+	path.join(workDirs.apps.site.public.path, "apps/counter"),
 );
 
 await fse.copy(
 	workDirs.apps.recorder.target.trunk.dist.path,
-	path.join(workDirs.apps.app.public.path, "apps/recorder"),
+	path.join(workDirs.apps.site.public.path, "apps/recorder"),
 );
 
 // Populate the repo-root /target/ aggregator (apps + release)

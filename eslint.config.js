@@ -32,7 +32,7 @@ const Constants = {
 		".agents/",
 		"skills/",
 		"apps/recorder/assets/sw.js",
-		"apps/app/src/gatsby-types.d.ts",
+		"apps/site/src/gatsby-types.d.ts",
 	],
 	jsConfigFiles: ["eslint.config.js"],
 	jsoncFiles: ["**/*.json?(c)"],

@@ -43,24 +43,20 @@ await Promise.all(
 	}),
 );
 
-// Also aggregate the gatsby app output under /target/apps/app/gatsby/public
-if (await fse.pathExists(workDirs.apps.app.public.path)) {
+// Also aggregate the gatsby site output under /target/apps/site/gatsby/public
+if (await fse.pathExists(workDirs.apps.site.public.path)) {
 	const gatsbyDestination = path.join(
 		workDirs.target.apps.path,
-		"app/gatsby/public",
+		"site/gatsby/public",
 	);
-	await fse.copy(workDirs.apps.app.public.path, gatsbyDestination);
+	await fse.copy(workDirs.apps.site.public.path, gatsbyDestination);
 	console.log(
-		`Copied ${workDirs.apps.app.public.path} -> ${gatsbyDestination}`,
+		`Copied ${workDirs.apps.site.public.path} -> ${gatsbyDestination}`,
 	);
 }
 
 // Populate /target/release/ with side-by-side per-app bundles
 const releaseLayout: { name: string; source: string }[] = [
-	{
-		name: "app",
-		source: workDirs.apps.app.public.path,
-	},
 	{
 		name: "counter",
 		source: workDirs.apps.counter.target.trunk.dist.path,
@@ -68,6 +64,10 @@ const releaseLayout: { name: string; source: string }[] = [
 	{
 		name: "recorder",
 		source: workDirs.apps.recorder.target.trunk.dist.path,
+	},
+	{
+		name: "site",
+		source: workDirs.apps.site.public.path,
 	},
 ];
 

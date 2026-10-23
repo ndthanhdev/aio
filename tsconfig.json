@@ -10,13 +10,13 @@
 	],
 	"references": [
 		{
-			"path": "./apps/app"
+			"path": "./apps/site"
 		},
 		{
 			"path": "./etc/scripts"
 		},
 		{
-			"path": "apps/app"
+			"path": "apps/site"
 		},
 		{
 			"path": "etc/scripts"

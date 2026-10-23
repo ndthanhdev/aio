@@ -1,3 +1,3 @@
 **/node_modules
 .yarn/
-app/public/
+apps/site/public/
