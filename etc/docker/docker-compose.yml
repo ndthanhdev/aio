@@ -26,7 +26,7 @@ services:
       # Keep the container's dependencies and build caches separate from the
       # host checkout so a host `moon run site:dev` and this service don't clash.
       # The mount points must already exist in the checkout, otherwise Docker
-      # creates them on the host owned by root; `moon run docker:up` creates them.
+      # creates them on the host owned by root; `moon run scripts:compose-up` creates them.
       - node_modules:/workspace/node_modules
       - yarn_cache:/home/dev/.yarn/berry
       - moon_cache:/workspace/.moon/cache

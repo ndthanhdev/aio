@@ -10,6 +10,7 @@ const etc = path.resolve(root, "etc");
 const counter = path.resolve(apps, "counter");
 const recorder = path.resolve(apps, "recorder");
 const site = path.resolve(apps, "site");
+const docker = path.resolve(etc, "docker");
 const workflowRuntime = path.resolve(etc, "workflow-runtime");
 const scripts = path.resolve(etc, "scripts");
 const target = path.resolve(root, "target");
@@ -52,6 +53,12 @@ export const workDirs = {
 	},
 
 	etc: {
+		docker: {
+			compose: {
+				path: path.resolve(docker, "docker-compose.yml"),
+			},
+			path: docker,
+		},
 		path: etc,
 		scripts: {
 			path: scripts,
