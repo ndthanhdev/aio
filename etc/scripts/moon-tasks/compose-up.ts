@@ -21,4 +21,4 @@ await Promise.all(
 	volumeMountPoints.map((directory) => fse.ensureDir(directory)),
 );
 
-await $`docker compose -f ${workDirs.etc.docker.compose.path} up --build`;
+await $`docker compose -f ${workDirs.etc.docker.compose.path} up --build --detach`;
