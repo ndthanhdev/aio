@@ -1,0 +1,43 @@
+name: aio
+
+services:
+  site:
+    build:
+      context: ../..
+      dockerfile: etc/docker/Dockerfile
+      args:
+        USER_UID: "${UID:-1000}"
+        USER_GID: "${GID:-1000}"
+        MOON_VERSION: "${MOON_VERSION:-}"
+    working_dir: /workspace
+    command:
+      - bash
+      - -lc
+      - yarn install && moon run site:dev -- --host 0.0.0.0 --port 8000
+    ports:
+      - "${SITE_PORT:-8000}:8000"
+    environment:
+      GATSBY_TELEMETRY_DISABLED: "1"
+      # Keeps Yarn's install state with the container's node_modules volume
+      # instead of overwriting the host's `.yarn/install-state.gz`.
+      YARN_INSTALL_STATE_PATH: /workspace/node_modules/.yarn-install-state.gz
+    volumes:
+      - ../..:/workspace
+      # Keep the container's dependencies and build caches separate from the
+      # host checkout so a host `moon run site:dev` and this service don't clash.
+      # The mount points must already exist in the checkout, otherwise Docker
+      # creates them on the host owned by root; `moon run docker:up` creates them.
+      - node_modules:/workspace/node_modules
+      - yarn_cache:/home/dev/.yarn/berry
+      - moon_cache:/workspace/.moon/cache
+      - site_cache:/workspace/apps/site/.cache
+      - site_public:/workspace/apps/site/public
+      - site_node_modules:/workspace/apps/site/node_modules
+
+volumes:
+  node_modules: {}
+  yarn_cache: {}
+  moon_cache: {}
+  site_cache: {}
+  site_public: {}
+  site_node_modules: {}

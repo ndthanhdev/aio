@@ -1,0 +1,25 @@
+# yaml-language-server: $schema: 'https://moonrepo.dev/schemas/project.json'
+toolchains:
+  default: system
+tasks:
+  # Compose mounts volumes at these paths inside the checkout; creating them
+  # first keeps them owned by the host user instead of root.
+  prepare:
+    command: mkdir -p ../../node_modules ../../.moon/cache ../../apps/site/.cache ../../apps/site/public ../../apps/site/node_modules
+    options:
+      cache: false
+      runInCI: false
+  up:
+    command: docker compose up --build
+    preset: server
+    deps:
+      - ~:prepare
+  down:
+    command: docker compose down
+    options:
+      cache: false
+      runInCI: false
+project:
+  description: Local development containers
+  title: "@n8v/docker"
+layer: tool

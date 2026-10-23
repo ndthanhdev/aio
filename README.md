@@ -26,5 +26,5 @@ Visit [https://ndthanhdev.github.io](https://ndthanhdev.github.io) to see the we
 1. Install [proto](https://moonrepo.dev/docs/proto/install)
 2. Clone this repository
 3. Inside the repo, run `proto use` to lift up the development environment
-4. Run `moon site:dev` to start the development server
+4. Run `moon site:dev` to start the development server, or `moon run docker:up` to run it in Docker instead
 5. Visit [docs](./docs) for more information
