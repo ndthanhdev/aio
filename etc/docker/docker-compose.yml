@@ -8,7 +8,6 @@ services:
       args:
         USER_UID: "${UID:-1000}"
         USER_GID: "${GID:-1000}"
-        MOON_VERSION: "${MOON_VERSION:-}"
     working_dir: /workspace
     command:
       - bash

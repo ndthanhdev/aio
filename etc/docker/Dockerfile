@@ -4,9 +4,6 @@ FROM ubuntu:noble
 ARG USER_UID=1000
 ARG USER_GID=1000
 ARG PROTO_VERSION=0.60.2
-# Empty installs the version `.prototools` resolves to; set it to pin moon, for
-# example when the newest release's binaries aren't published yet.
-ARG MOON_VERSION=
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -43,4 +40,4 @@ COPY --chown=dev:dev .prototools /workspace/.prototools
 
 RUN proto install node \
 	&& proto install yarn \
-	&& proto install moon ${MOON_VERSION}
+	&& proto install moon
