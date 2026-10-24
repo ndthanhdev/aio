@@ -5,7 +5,7 @@
     - `content/handbook/`: The website's handbook, one folder per section (`concepts/`, `how-tos/`, `how-it-works/`). Each MDX file becomes a page at `/handbook/<section>/<file>`.
 - `packages/`: Contains all the `packages` that are used in the `apps` or `packages`.
 - `etc/`: Contains everything else grouped by `type`.
-  - `docker/`: Docker Compose setup for local development. `moon run scripts:compose-up` starts the `site` service in the background (the dev server at `http://localhost:8000`, or `SITE_PORT`) against the checkout, with dependencies and caches in Docker volumes. Follow its output with `docker compose -f etc/docker/docker-compose.yml logs -f`; `moon run scripts:compose-down` stops it.
+  - `docker/`: Docker Compose setup for local development. `moon run scripts:compose-up` starts the `site` service in the background (the dev server at `http://localhost:8000`, or `SITE_PORT`) against the checkout, with dependencies and caches in Docker volumes. Follow its output with `docker compose -f etc/docker/docker-compose.yml logs -f`; `moon run scripts:compose-down` stops it. Copy `etc/docker/.env.example` to `etc/docker/.env` to change the port, moon version or container UID/GID.
   - `workflow-runtime/`: Provide runtime and utils to run `etc/scripts/workflows/`.
   - `scripts/`
     - `utils/`: Contains utility modules for reuse in other scripts.

@@ -2,6 +2,7 @@
 .cache/
 .tmp/
 *.local.*
+.env
 
 # OS
 .DS_Store
