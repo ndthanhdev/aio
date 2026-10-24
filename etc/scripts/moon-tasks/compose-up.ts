@@ -1,5 +1,10 @@
 #!/usr/bin/env -S yarn dlx tsx
 import "zx/globals";
+import {
+	getComposeEnv,
+	serviceCodes,
+	toHostPort,
+} from "@n8v/scripts/utils/compose-env";
 import { workDirs } from "@n8v/scripts/utils/work-dirs";
 import fse from "fs-extra";
 // eslint-disable-next-line unicorn/import-style
@@ -21,4 +26,17 @@ await Promise.all(
 	volumeMountPoints.map((directory) => fse.ensureDir(directory)),
 );
 
-await $`docker compose -f ${workDirs.etc.docker.compose.path} up --build --detach`;
+const composeEnv = await getComposeEnv();
+
+await $({
+	env: { ...process.env, ...composeEnv },
+})`docker compose -f ${workDirs.etc.docker.compose.path} up --build --detach`;
+
+const project = `aio-${composeEnv.PORT_WORKTREE}`;
+
+console.log(
+	[
+		`site: http://localhost:${String(toHostPort(composeEnv, serviceCodes.site))}`,
+		`logs: docker compose -f ${workDirs.etc.docker.compose.path} -p ${project} logs -f`,
+	].join("\n"),
+);

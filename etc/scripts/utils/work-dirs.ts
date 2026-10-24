@@ -57,6 +57,9 @@ export const workDirs = {
 			compose: {
 				path: path.resolve(docker, "docker-compose.yml"),
 			},
+			env: {
+				path: path.resolve(docker, ".env"),
+			},
 			path: docker,
 		},
 		path: etc,
