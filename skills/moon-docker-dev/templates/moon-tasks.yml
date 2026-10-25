@@ -1,0 +1,14 @@
+# Merge into the tooling project's moon.yml (the project whose scripts folder
+# holds compose-up.ts and compose-down.ts). Make both scripts executable.
+tasks:
+  # Local development containers (etc/docker); never part of CI.
+  compose-up:
+    preset: utility
+    script: $projectRoot/moon-tasks/compose-up.ts
+    options:
+      runInCI: false
+  compose-down:
+    preset: utility
+    script: $projectRoot/moon-tasks/compose-down.ts
+    options:
+      runInCI: false

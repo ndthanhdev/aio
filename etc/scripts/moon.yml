@@ -25,6 +25,17 @@ tasks:
   collect-workspace-targets:
     preset: utility
     script: $projectRoot/moon-tasks/collect-workspace-targets.ts
+  # Local development containers (etc/docker); never part of CI.
+  compose-up:
+    preset: utility
+    script: $projectRoot/moon-tasks/compose-up.ts
+    options:
+      runInCI: false
+  compose-down:
+    preset: utility
+    script: $projectRoot/moon-tasks/compose-down.ts
+    options:
+      runInCI: false
   check:
     preset: utility
     deps:
