@@ -4,8 +4,8 @@ description: >-
   Containerizes local development for a moonrepo + proto monorepo with Docker
   Compose: a proto-based dev image pinned by .prototools, a bind-mounted
   checkout with dependencies and caches in Docker volumes, one compose project
-  per git worktree, and portless hostnames (https://<app>.<repo>.localhost,
-  https://<worktree>.<app>.<repo>.localhost) routed to Docker-assigned ports by
+  per git worktree, and portless hostnames (https://<app>.main.<repo>.localhost,
+  https://<app>.<worktree>.<repo>.localhost) routed to Docker-assigned ports by
   moon tasks (compose-up / compose-down) that run it detached. Use when the
   user asks to containerize, dockerize, or add docker-compose / Docker local
   dev to a moon or moonrepo repository, or to run dev containers per worktree
@@ -30,10 +30,10 @@ Read these before writing anything:
 
 No fixed host ports. Each service publishes `127.0.0.1::<container port>` (Docker picks a free loopback port); `compose-up` reads it with `docker compose port` and registers it with `portless alias <route> <port> --force`. The portless proxy on the host serves the route over HTTPS with its trusted local CA.
 
-| Checkout                       | Compose project | URL                                 |
-| ------------------------------ | --------------- | ----------------------------------- |
-| main                           | `<repo>-main`   | `https://<app>.<repo>.localhost`    |
-| linked worktree in folder `bk` | `<repo>-bk`     | `https://bk.<app>.<repo>.localhost` |
+| Checkout                       | Compose project | URL                                   |
+| ------------------------------ | --------------- | ------------------------------------- |
+| main                           | `<repo>-main`   | `https://<app>.main.<repo>.localhost` |
+| linked worktree in folder `bk` | `<repo>-bk`     | `https://<app>.bk.<repo>.localhost`   |
 
 The worktree name is `main` when `git rev-parse --git-dir` equals `--git-common-dir`, otherwise the sanitized worktree folder name (stable across branch switches). `WORKTREE` from the shell or `etc/docker/.env` overrides it. portless is a root devDependency, called as `yarn portless ...` from the repo root, so the CLI version is pinned per repo.
 
@@ -98,7 +98,7 @@ Add `.env` to `.gitignore` (the example stays tracked). Document `moon run <tool
 - **Branch switches under a running dev server**: switching to a branch that lacks files the server watches can leave it broken (for example a page that stops being a page) even after switching back; restart the dev server.
 - **New tool releases**: proto resolves ranges like `moon = "^2"` to the newest tag, which can briefly have no published binaries (404 on install). It resolves itself once the release finishes; do not add overrides for it.
 - **git in a linked worktree**: its `.git` is a file pointing at `<main checkout>/.git/worktrees/<name>` by absolute host path, so moon fails with `not a git repository` in the container. Mount the git common dir (`git rev-parse --path-format=absolute --git-common-dir`) at the same path, passed as `GIT_COMMON_DIR`.
-- **portless aliases have no automatic worktree prefix**: that only applies to apps portless starts itself (`portless run`); build the route name in the helper.
+- **portless aliases get no automatic worktree label**: that only applies to apps portless starts itself (`portless run`, as a branch prefix); build the route name in the helper.
 - **One proxy, many repos**: the repo's portless CLI writes routes the host proxy reads; keep the devDependency on the proxy's major/minor. Hostnames come from the proxy, so read the public URL from `yarn portless list` rather than assuming port 443.
 - **Ports change on every recreate**: always re-alias with `--force` after `compose up`; an unclean stop leaves a stale alias (gateway error) until the next `compose-up`.
 

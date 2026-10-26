@@ -3,7 +3,7 @@
 name: __REPO__-${WORKTREE:-main}
 
 # Services publish a loopback port that Docker picks; the compose-up task
-# routes a portless hostname to it, for example https://__APP__.__REPO__.localhost.
+# routes a portless hostname to it, for example https://__APP__.main.__REPO__.localhost.
 # New services also need an entry in `services` in compose-env.ts.
 services:
   __APP__:

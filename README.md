@@ -26,5 +26,5 @@ Visit [https://ndthanhdev.github.io](https://ndthanhdev.github.io) to see the we
 1. Install [proto](https://moonrepo.dev/docs/proto/install)
 2. Clone this repository
 3. Inside the repo, run `proto use` to lift up the development environment
-4. Run `moon site:dev` to start the development server, or `moon run scripts:compose-up` to run it in Docker in the background at `https://site.aio.localhost` instead (needs the [portless](https://portless.sh) proxy; start it once with `yarn portless service install`)
+4. Run `moon site:dev` to start the development server, or `moon run scripts:compose-up` to run it in Docker in the background at `https://site.main.aio.localhost` instead (needs the [portless](https://portless.sh) proxy; start it once with `yarn portless service install`)
 5. Visit [docs](./docs) for more information

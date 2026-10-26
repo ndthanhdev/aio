@@ -5,7 +5,7 @@ import fse from "fs-extra";
 import * as path from "node:path";
 import { parseEnv } from "node:util";
 
-/** Prefix of compose project names and portless routes. */
+/** Prefix of compose project names and last label of portless routes. */
 export const projectName = "aio";
 
 /**
@@ -61,15 +61,9 @@ export const getWorktreeName = async (directory: string): Promise<string> => {
 	return toLabel(path.basename(topLevel));
 };
 
-/** portless route for a service: `site.aio`, or `bk.site.aio` in worktree `bk`. */
+/** portless route for a service: `site.main.aio`, or `site.bk.aio` in worktree `bk`. */
 export const toRouteName = (worktree: string, service: ServiceName): string =>
-	[
-		worktree === "main" ? undefined : worktree,
-		services[service].hostname,
-		projectName,
-	]
-		.filter(Boolean)
-		.join(".");
+	[services[service].hostname, worktree, projectName].join(".");
 
 const getGitCommonDirectory = async (directory: string): Promise<string> => {
 	const output = await $({

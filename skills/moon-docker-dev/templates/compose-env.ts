@@ -73,15 +73,9 @@ export const getWorktreeName = async (directory: string): Promise<string> => {
 	return toLabel(path.basename(topLevel));
 };
 
-/** portless route for a service: `<app>.<repo>`, or `<worktree>.<app>.<repo>`. */
+/** portless route for a service: `<app>.<worktree>.<repo>`, for example `<app>.main.<repo>`. */
 export const toRouteName = (worktree: string, service: ServiceName): string =>
-	[
-		worktree === "main" ? undefined : worktree,
-		services[service].hostname,
-		projectName,
-	]
-		.filter(Boolean)
-		.join(".");
+	[services[service].hostname, worktree, projectName].join(".");
 
 const getGitCommonDirectory = async (directory: string): Promise<string> => {
 	const output = await $({
