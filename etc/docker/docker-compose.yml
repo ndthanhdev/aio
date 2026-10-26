@@ -28,6 +28,10 @@ services:
       YARN_INSTALL_STATE_PATH: /workspace/node_modules/.yarn-install-state.gz
     volumes:
       - ../..:/workspace
+      # A linked worktree's `.git` file points into the main checkout's `.git`
+      # by absolute path; mount it there so git (and moon) work in the
+      # container. `moon run scripts:compose-up` sets GIT_COMMON_DIR.
+      - ${GIT_COMMON_DIR:-../../.git}:${GIT_COMMON_DIR:-/workspace/.git}
       # Keep the container's dependencies and build caches separate from the
       # host checkout so a host `moon run site:dev` and this service don't clash.
       # The mount points must already exist in the checkout, otherwise Docker

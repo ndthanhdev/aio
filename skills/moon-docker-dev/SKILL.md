@@ -97,6 +97,7 @@ Add `.env` to `.gitignore` (the example stays tracked). Document `moon run <tool
 - **Do not clean a running dev server's cache**: production builds that run a clean step (for example `gatsby clean`) break a dev server using the same folders; that is why caches live in volumes.
 - **Branch switches under a running dev server**: switching to a branch that lacks files the server watches can leave it broken (for example a page that stops being a page) even after switching back; restart the dev server.
 - **New tool releases**: proto resolves ranges like `moon = "^2"` to the newest tag, which can briefly have no published binaries (404 on install). It resolves itself once the release finishes; do not add overrides for it.
+- **git in a linked worktree**: its `.git` is a file pointing at `<main checkout>/.git/worktrees/<name>` by absolute host path, so moon fails with `not a git repository` in the container. Mount the git common dir (`git rev-parse --path-format=absolute --git-common-dir`) at the same path, passed as `GIT_COMMON_DIR`.
 - **portless aliases have no automatic worktree prefix**: that only applies to apps portless starts itself (`portless run`); build the route name in the helper.
 - **One proxy, many repos**: the repo's portless CLI writes routes the host proxy reads; keep the devDependency on the proxy's major/minor. Hostnames come from the proxy, so read the public URL from `yarn portless list` rather than assuming port 443.
 - **Ports change on every recreate**: always re-alias with `--force` after `compose up`; an unclean stop leaves a stale alias (gateway error) until the next `compose-up`.
@@ -110,5 +111,6 @@ Run alongside any existing host dev server or other containers; never stop the u
 - `moon run <tool>:compose-up` returns, `yarn portless list` shows each route, and it prints the HTTPS URLs and the logs command; the container runs as the host UID with the `.prototools` versions.
 - Over HTTPS: main routes return 200 and an unknown URL returns 404; an edit on the host shows up in the container through the proxy (live reload).
 - Running `compose-up` again keeps the same URL even though the container's host port changed.
+- `compose-up` from a linked worktree starts the service too (moon can run git there) and serves the worktree's URL.
 - `git status` shows no unexpected files and `find . -user root` (excluding `node_modules`, `.git`) finds nothing; the host's own dev setup still works.
 - `moon run <tool>:compose-down` removes only this worktree's routes and project.

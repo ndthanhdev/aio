@@ -19,6 +19,11 @@ export const services = {
 
 /** Variables etc/docker/docker-compose.yml reads. */
 export interface ComposeEnv {
+	/**
+	 * Absolute path of the repository's shared `.git`. A linked worktree's `.git`
+	 * file points into it, so compose mounts it at the same path.
+	 */
+	GIT_COMMON_DIR: string;
 	WORKTREE: string;
 }
 
@@ -78,6 +83,15 @@ export const toRouteName = (worktree: string, service: ServiceName): string =>
 		.filter(Boolean)
 		.join(".");
 
+const getGitCommonDirectory = async (directory: string): Promise<string> => {
+	const output = await $({
+		cwd: directory,
+		quiet: true,
+	})`git rev-parse --path-format=absolute --git-common-dir`;
+
+	return output.stdout.trim();
+};
+
 /**
  * Resolves WORKTREE from the shell environment, then etc/docker/.env, then the
  * worktree itself. Empty values count as unset, as they do in compose's
@@ -96,5 +110,8 @@ export const getComposeEnv = async (repoRoot: string): Promise<ComposeEnv> => {
 		);
 	}
 
-	return { WORKTREE: worktree };
+	return {
+		GIT_COMMON_DIR: await getGitCommonDirectory(repoRoot),
+		WORKTREE: worktree,
+	};
 };
