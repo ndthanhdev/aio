@@ -1,12 +1,10 @@
-# One project per worktree, so worktrees don't share containers or volumes.
-name: __REPO__-${PORT_WORKTREE:-00}
+# One project per worktree (`main`, or the linked worktree's folder name), so
+# worktrees don't share containers or volumes.
+name: __REPO__-${WORKTREE:-main}
 
-# Services publish only a host port, built as A BB CC:
-#   A  = PORT_PREFIX, user-defined digit (default 1)
-#   BB = PORT_WORKTREE, 00 in the main checkout, 01-99 in a linked worktree
-#        (computed by the compose-up task)
-#   CC = the service code: __APP__ __SERVICE_CODE__. New services take the next
-#        code and are added to `serviceCodes` in compose-env.ts.
+# Services publish a loopback port that Docker picks; the compose-up task
+# routes a portless hostname to it, for example https://__APP__.__REPO__.localhost.
+# New services also need an entry in `services` in compose-env.ts.
 services:
   __APP__:
     build:
@@ -21,7 +19,7 @@ services:
       - -lc
       - yarn install && moon run __APP__:dev -- --host 0.0.0.0 --port __APP_PORT__
     ports:
-      - "${PORT_PREFIX:-1}${PORT_WORKTREE:-00}__SERVICE_CODE__:__APP_PORT__"
+      - "127.0.0.1::__APP_PORT__"
     environment:
       # Keeps Yarn's install state with the container's node_modules volume
       # instead of overwriting the host's `.yarn/install-state.gz`.
