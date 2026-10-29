@@ -14363,6 +14363,7 @@ __metadata:
     luxon: "npm:^3.5.0"
     modern-normalize: "npm:^2.0.0"
     polished: "npm:^4.3.1"
+    portless: "npm:^0.15.12"
     prettier: "npm:^3.4.2"
     prismjs: "npm:^1.29.0"
     ramda: "npm:^0.29.1"
@@ -15249,6 +15250,16 @@ __metadata:
   dependencies:
     "@babel/runtime": "npm:^7.17.8"
   checksum: 10c0/45480d4c7281a134281cef092f6ecc202a868475ff66a390fee6e9261386e16f3047b4de46a2f2e1cf7fb7aa8f52d30b4ed631a1e3bcd6f303ca31161d4f07fe
+  languageName: node
+  linkType: hard
+
+"portless@npm:^0.15.12":
+  version: 0.15.12
+  resolution: "portless@npm:0.15.12"
+  bin:
+    portless: dist/cli.js
+  checksum: 10c0/fb3e87f0401a4af54974f8660805bfd6dc9222efac17ecd6cb7603e499a310e51a5d1228216d429074bc9b6bb6199f8782d66c39d09f5c90aeb916ec6e17872e
+  conditions: (os=darwin | os=linux | os=win32)
   languageName: node
   linkType: hard
 

@@ -1,12 +1,11 @@
-# One project per worktree, so worktrees don't share containers or volumes.
-name: aio-${PORT_WORKTREE:-00}
+# One project per worktree (`main`, or the linked worktree's folder name), so
+# worktrees don't share containers or volumes.
+name: aio-${WORKTREE:-main}
 
-# Services publish only a host port, built as A BB CC:
-#   A  = PORT_PREFIX, user-defined digit (default 1)
-#   BB = PORT_WORKTREE, 00 in the main checkout, 01-99 in a linked worktree
-#        (computed by `moon run scripts:compose-up`)
-#   CC = the service code: site 01. New services take the next code and are
-#        added to `serviceCodes` in etc/scripts/utils/compose-env.ts.
+# Services publish a loopback port that Docker picks; `moon run
+# scripts:compose-up` routes a portless hostname to it, for example
+# https://site.main.aio.localhost. New services also need an entry in `services` in
+# etc/scripts/utils/compose-env.ts.
 services:
   site:
     build:
@@ -21,7 +20,7 @@ services:
       - -lc
       - yarn install && moon run site:dev -- --host 0.0.0.0 --port 8000
     ports:
-      - "${PORT_PREFIX:-1}${PORT_WORKTREE:-00}01:8000"
+      - "127.0.0.1::8000"
     environment:
       GATSBY_TELEMETRY_DISABLED: "1"
       # Keeps Yarn's install state with the container's node_modules volume
@@ -29,6 +28,10 @@ services:
       YARN_INSTALL_STATE_PATH: /workspace/node_modules/.yarn-install-state.gz
     volumes:
       - ../..:/workspace
+      # A linked worktree's `.git` file points into the main checkout's `.git`
+      # by absolute path; mount it there so git (and moon) work in the
+      # container. `moon run scripts:compose-up` sets GIT_COMMON_DIR.
+      - ${GIT_COMMON_DIR:-../../.git}:${GIT_COMMON_DIR:-/workspace/.git}
       # Keep the container's dependencies and build caches separate from the
       # host checkout so a host `moon run site:dev` and this service don't clash.
       # The mount points must already exist in the checkout, otherwise Docker
