@@ -22,6 +22,17 @@ tasks:
     # invoke it explicitly via `with-moon-task`, which ignores runInCI.
     options:
       runInCI: false
+  # No utility preset: moon v2 utility sets runInCI to skip.
+  openspec-validate:
+    script: $projectRoot/moon-tasks/openspec-validate.ts
+    inputs:
+      - /openspec/**/*
+      - /package.json
+      - moon-tasks/openspec-validate.ts
+    env:
+      OPENSPEC_TELEMETRY: "0"
+    options:
+      runInCI: true
   collect-workspace-targets:
     preset: utility
     script: $projectRoot/moon-tasks/collect-workspace-targets.ts
